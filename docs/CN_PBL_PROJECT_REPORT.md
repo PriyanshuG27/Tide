@@ -632,7 +632,29 @@ In production deployment, all WebSocket and HTTP communication is encapsulated w
 
 ---
 
-## 10. Summary & Conclusion
+## 10. Team Member Roles, Code Ownership & Viva Voce Division
+
+To ensure equitable Project-Based Learning (PBL) assessment, the TIDE engineering responsibilities are partitioned into four distinct, cohesive architectural domains across the team:
+
+### 10.1 Module Division Matrix
+
+| Team Member | Enrollment No. | Architectural Domain | Core Source Code Ownership | Primary Computer Networks Concepts |
+|---|---|---|---|---|
+| **Priyanshu Gumber** | 2401030082 | **Transport Layer, Zero-Config Discovery & Clock Sync** | `agent/discovery.py`<br>`server/discovery.py`<br>`agent/clock.py`<br>`server/clock.py`<br>`server/monitor.py` | UDP datagram sockets (`SOCK_DGRAM`), Limited Broadcast (`255.255.255.255:47800`), RFC 919/922 broadcast confinement, Cristian's Clock Synchronization Algorithm, Round-Trip Time ($RTT$) latency compensation. |
+| **Toyesh Gupta** | 2401030081 | **Full-Duplex WebSockets, Session Security & Outbox Engine** | `agent/link.py`<br>`server/hub.py`<br>`agent/outbox.py`<br>`common/protocol.py`<br>`server/exam_service.py` | RFC 6455 persistent WebSocket streaming, CSPRNG session token issuance (256 bits), SHA-256 database hashing, Store-and-Forward Outbox pattern, Truncated Exponential Backoff. |
+| **Rashi Johari** | 2401030072 | **Boundary Telemetry, Active Probing & Rogue LAN Peers** | `agent/win/net.py`<br>`agent/watchers.py`<br>`agent/platform.py`<br>`agent/win/windows.py` | Cross-layer socket table inspection (`psutil.net_connections`), RFC 1918 private subnets, Promiscuous mode Wireshark pass-through, Layer 7 NCSI HTTP probe, Layer 4 TCP Anycast probe, 802.11 SSID tracking. |
+| **Ivy Singh** | 2401030071 | **Telemetry Ingestion, Winnowing Fingerprinting & Classifier** | `server/ingest.py`<br>`common/fingerprint.py`<br>`server/similarity.py`<br>`server/decide.py`<br>`server/classify/*` | Central WebSocket frame dispatching, Server-side Dead-Man Watchdog (>10s timeout), Delta encoding for bandwidth optimization, MOSS-style AST Winnowing algorithm, CRC32 polynomial hashing, Edge-to-Cloud decision hierarchy. |
+
+### 10.2 Viva Voce Individual Defense Ownership
+
+1. **Priyanshu Gumber:** Defends UDP vs. TCP tradeoffs for network discovery, broadcast domain boundaries under RFC 919/922, and the mathematical derivation of Cristian's clock synchronization algorithm ($RTT$ measurement, symmetric propagation delay assumption, and immunity to client clock tampering).
+2. **Toyesh Gupta:** Defends the overhead reduction of RFC 6455 WebSockets over HTTP polling (2–10 byte frames vs 800+ bytes headers), session security via 256-bit CSPRNG tokens and SHA-256 hashing at rest, and the Store-and-Forward Outbox queue for network partition tolerance.
+3. **Rashi Johari:** Defends cross-layer socket state inspection (`CONN_ESTABLISHED`), RFC 1918 private address filtering for peer-to-peer cheat detection, why Wireshark's promiscuous mode capture runs without false alarms, and dual-engine active internet probing (Layer 7 NCSI HTTP vs Layer 4 TCP).
+4. **Ivy Singh:** Defends delta encoding for network bandwidth conservation (~4.0 kbps per PC), the server-side dead-man watchdog timer, the AST Winnowing fingerprinting algorithm (lexical normalization, variable name erasure, CRC32 polynomial hashing), and the multi-tier AI decision pipeline.
+
+---
+
+## 11. Summary & Conclusion
 
 TIDE demonstrates that **robust exam integrity does not require restricting students to artificial browser kiosks or disabling network connectivity**. By combining:
 - **Transport Layer Sockets & Broadcast Discovery (UDP/TCP)**

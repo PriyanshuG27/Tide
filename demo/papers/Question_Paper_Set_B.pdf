@@ -1,0 +1,87 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 3071 >>
+stream
+0.12 0.15 0.22 rg
+40 760 515 50 re f
+1 1 1 rg
+BT /F2 16 Tf 55 788 Td (CS301 Lab Examination - Fall 2026) Tj ET
+BT /F1 10 Tf 55 770 Td (Department of Computer Science & Engineering) Tj ET
+0.9 0.3 0.25 rg
+450 768 95 32 re f
+1 1 1 rg
+BT /F2 14 Tf 465 780 Td (SET B) Tj ET
+0.2 0.2 0.2 rg
+BT /F1 9 Tf
+45 735 Td (Course: CS301 Algorithms & Networking Lab  |  Assigned: Even Seats \(PC-02, PC-04...\)  |  Duration: 90 Mins  |  Max Marks: 50) Tj ET
+0.8 0.8 0.8 RG 1 w
+40 723 m 555 723 l S
+0.15 0.25 0.45 rg
+BT /F2 12 Tf 45 701 Td (INSTRUCTIONS TO CANDIDATES) Tj ET
+0.7 0.75 0.85 RG 0.5 w
+45 695 m 555 695 l S
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 45 679 Td (1. Write all your solutions in main.c \(or solution.py\) located inside C:\\Exam\\<roll>\\.) Tj ET
+BT /F1 9.5 Tf 45 665 Td (2. All workspace activity, active windows, and clipboard transfers are monitored by Tide.) Tj ET
+BT /F1 9.5 Tf 45 651 Td (3. Any unauthorized websites or external code sources will result in auto-closure and flags.) Tj ET
+BT /F1 9.5 Tf 45 637 Td (4. When finished, press the 'Submit' button in the floating Tide HUD bar at the top of your screen.) Tj ET
+0.15 0.25 0.45 rg
+BT /F2 12 Tf 45 611 Td (PROBLEM 1: Circular Ring Buffer for Audio Streaming [25 Marks]) Tj ET
+0.7 0.75 0.85 RG 0.5 w
+45 605 m 555 605 l S
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 45 589 Td (Implement a fixed-size circular ring buffer for real-time audio packet buffering.) Tj ET
+BT /F1 9.5 Tf 45 575 Td (The buffer holds a maximum capacity of K frame samples.) Tj ET
+BT /F1 9.5 Tf 45 561 Td (Requirements:) Tj ET
+BT /F1 9.5 Tf 60 547 Td (- Enqueue\(sample\): Add sample in O\(1\). If full, overwrite oldest sample & increment drop count.) Tj ET
+BT /F1 9.5 Tf 60 533 Td (- Dequeue\(\): Retrieve and remove oldest sample in O\(1\). Return -1 if empty.) Tj ET
+BT /F1 9.5 Tf 60 519 Td (- DrainAll\(\): Return all available elements in FIFO order and reset buffer state.) Tj ET
+BT /F2 9.5 Tf 45 505 Td (Input:  Capacity=3, Enqueue\(10\), Enqueue\(20\), Enqueue\(30\), Enqueue\(40\), Dequeue\(\)) Tj ET
+BT /F2 9.5 Tf 45 491 Td (Output: Overwritten count: 1 \(Sample 10 dropped\) | Dequeued: 20 | Remaining: [30, 40]) Tj ET
+0.15 0.25 0.45 rg
+BT /F2 12 Tf 45 465 Td (PROBLEM 2: Graph Cycle Detection & Topological Task Scheduling [25 Marks]) Tj ET
+0.7 0.75 0.85 RG 0.5 w
+45 459 m 555 459 l S
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 45 443 Td (You are given N build tasks with M directed prerequisites \(U must finish before V\).) Tj ET
+BT /F1 9.5 Tf 45 429 Td (Requirements:) Tj ET
+BT /F1 9.5 Tf 60 415 Td (- Detect if deadlock exists \(directed cycle\). If yes, print 'DEADLOCK DETECTED'.) Tj ET
+BT /F1 9.5 Tf 60 401 Td (- If acyclic, output any valid linear sequence of task completion \(Kahn's / DFS\).) Tj ET
+BT /F2 9.5 Tf 45 387 Td (Input:  N=4, Dependencies: \(1->2\), \(1->3\), \(3->4\), \(2->4\)) Tj ET
+BT /F2 9.5 Tf 45 373 Td (Output: Cycle: NO | Valid Schedule: 1 -> 2 -> 3 -> 4) Tj ET
+0.5 0.5 0.5 rg
+BT /F1 8 Tf 45 35 Td (Tide Lab Examination System - DO NOT DETACH OR SHARE - odd/even seat randomized paper) Tj ET
+0.8 0.8 0.8 RG 0.5 w
+40 48 m 555 48 l S
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000257 00000 n 
+0000003380 00000 n 
+0000003477 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+3579
+%%EOF

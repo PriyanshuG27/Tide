@@ -13,7 +13,7 @@ DOC_EXTS = {".pdf", ".docx", ".doc", ".pptx"}
 SKIP_DIRS = {"appdata", "node_modules", ".git", "windows", "program files", "program files (x86)",
              "$recycle.bin", "programdata", "system volume information", ".vscode", ".cache",
              "__pycache__", "site-packages", "venv", ".venv", "library"}
-_FILENAME = re.compile(r"([\w\-.]+\.[A-Za-z0-9]{1,5})\b")
+_FILENAME = re.compile(r"([\w\-.]+\.[A-Za-z0-9]{1,5}|Untitled-\d+)\b", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -52,26 +52,40 @@ class Inventory:
         return best
 
 
-def build_inventory(roots: list[Path], exclude: Path | None = None, max_files: int = 5000,
+def build_inventory(roots: list[Path], exclude: Path | None = None, max_files: int = 20000,
                     max_bytes: int = 200_000) -> Inventory:
     files: list[InvFile] = []
     excluded = exclude.resolve() if exclude else None
     for root in roots:
         if not root.exists():
             continue
+        if root.is_file():
+            ext = root.suffix.lower()
+            if ext in TEXT_EXTS or ext in DOC_EXTS:
+                fp: frozenset[int] = frozenset()
+                if ext in TEXT_EXTS:
+                    try:
+                        if root.stat().st_size <= max_bytes:
+                            fp = fingerprints(root.read_text(encoding="utf-8", errors="ignore"))
+                    except OSError:
+                        pass
+                files.append(InvFile(str(root), root.name, fp))
+            continue
+        is_backup_dir = "backups" in str(root).lower()
         for dirpath, dirnames, filenames in os.walk(root):
             here = Path(dirpath).resolve()
             if excluded and (here == excluded or excluded in here.parents):
                 dirnames[:] = []
                 continue
-            dirnames[:] = [d for d in dirnames if d.lower() not in SKIP_DIRS and not d.startswith(".")]
+            if not is_backup_dir:
+                dirnames[:] = [d for d in dirnames if d.lower() not in SKIP_DIRS and not d.startswith(".")]
             for name in filenames:
                 ext = Path(name).suffix.lower()
-                if ext not in TEXT_EXTS and ext not in DOC_EXTS:
+                if ext not in TEXT_EXTS and ext not in DOC_EXTS and not is_backup_dir:
                     continue
                 path = Path(dirpath) / name
                 fp: frozenset[int] = frozenset()
-                if ext in TEXT_EXTS:
+                if ext in TEXT_EXTS or is_backup_dir:
                     try:
                         if path.stat().st_size <= max_bytes:
                             fp = fingerprints(path.read_text(encoding="utf-8", errors="ignore"))
@@ -85,11 +99,24 @@ def build_inventory(roots: list[Path], exclude: Path | None = None, max_files: i
 
 def default_roots() -> list[Path]:
     home = Path.home()
-    roots = [home / d for d in ("Desktop", "Documents", "Downloads", "OneDrive")]
+    roots = [home / d for d in ("Desktop", "Documents", "Downloads", "OneDrive", "source", "repos",
+                                "projects", "code", "workspace", "IdeaProjects", "PycharmProjects", "dev")]
     if sys.platform == "win32":
+        for p in ("C:/code", "C:/projects", "C:/src", "C:/dev", "C:/temp", "C:/test"):
+            d = Path(p)
+            if d.exists():
+                roots.append(d)
+        appdata = os.environ.get("APPDATA")
+        if appdata:
+            vscode_backups = Path(appdata) / "Code" / "Backups"
+            if vscode_backups.exists():
+                roots.append(vscode_backups)
         import psutil
         for part in psutil.disk_partitions(all=False):
-            mount = Path(part.mountpoint)
-            if mount.drive.upper() != "C:":
-                roots.append(mount)
+            try:
+                mount = Path(part.mountpoint)
+                if mount.drive.upper() != "C:":
+                    roots.append(mount)
+            except Exception:
+                pass
     return roots

@@ -29,6 +29,17 @@ export default function Live({ room, page, onPage, onOpen }:
           {menu && <div className="menu-list">{SIM.filter(([k]) => k !== "internet" || room.exam?.internet === "blocked").map(([k, label]) => (
             <button key={k} onClick={() => { setMenu(false); api.simulate(real?.seat_no ?? 7, k); }}>{label} · PC-{String(real?.seat_no ?? 7).padStart(2, "0")}</button>))}</div>}
         </div>
+        <button
+          className="btn danger"
+          onClick={async () => {
+            if (confirm("End the exam now and force submit all students?")) {
+              await api.endExam();
+              onPage("results");
+            }
+          }}
+        >
+          End exam
+        </button>
       </TopBar>
       <div className="page">
         <div className="summary">

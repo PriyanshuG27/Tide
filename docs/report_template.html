@@ -453,7 +453,8 @@
   <tr><td class="toc-num">8.</td><td class="toc-title">Active Dual-Engine Internet Probing & NCSI Captive Portals</td><td class="toc-page">10</td></tr>
   <tr><td class="toc-num">9.</td><td class="toc-title">Payload Content Verification (Winnowing Fingerprinting)</td><td class="toc-page">11</td></tr>
   <tr><td class="toc-num">10.</td><td class="toc-title">Complete File Structure & Implementation</td><td class="toc-page">12</td></tr>
-  <tr><td class="toc-num">11.</td><td class="toc-title">Viva Preparation — Full Computer Networks Syllabus Map</td><td class="toc-page">13</td></tr>
+  <tr><td class="toc-num">11.</td><td class="toc-title">Team Member Roles, Code Ownership & Viva Defense Division</td><td class="toc-page">13</td></tr>
+  <tr><td class="toc-num">12.</td><td class="toc-title">Viva Preparation — Full Computer Networks Syllabus Map</td><td class="toc-page">14</td></tr>
 </table>
 
 <!-- PAGE 3: PROJECT OVERVIEW -->
@@ -1219,9 +1220,63 @@ the <strong>Winnowing Algorithm (MOSS-style)</strong> in <code>common/tide_commo
   </tbody>
 </table>
 
-<!-- PAGE 13: VIVA SYLLABUS MAP -->
+<!-- PAGE 13: TEAM DIVISION & ROLES -->
 <div class="page-break"></div>
-<div class="section-pill-header">11. Viva Preparation — Full Computer Networks Syllabus Map</div>
+<div class="section-pill-header">11. Team Member Roles, Code Ownership & Viva Defense Division</div>
+
+<p>
+To demonstrate mastery across the computer networking curriculum, the engineering responsibilities of TIDE were 
+divided into four cohesive, well-bounded architectural domains across our team of four:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:20%;">Member</th>
+      <th style="width:28%;">Architectural Domain</th>
+      <th style="width:22%;">Code Files Owned</th>
+      <th>Key Computer Networks Concepts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Priyanshu Gumber</strong><br><span style="font-size:7.5pt; color:#64748b;">2401030082</span></td>
+      <td><strong>Transport Layer, Discovery & Clock Sync</strong></td>
+      <td><code>agent/discovery.py</code><br><code>server/discovery.py</code><br><code>agent/clock.py</code></td>
+      <td>UDP datagram sockets, Limited Broadcast (<code>255.255.255.255:47800</code>), RFC 919/922, Cristian's Clock Synchronization Algorithm, Round-Trip Time (RTT) latency compensation.</td>
+    </tr>
+    <tr>
+      <td><strong>Toyesh Gupta</strong><br><span style="font-size:7.5pt; color:#64748b;">2401030081</span></td>
+      <td><strong>WebSockets, Session Security & Outbox</strong></td>
+      <td><code>agent/link.py</code><br><code>server/hub.py</code><br><code>agent/outbox.py</code></td>
+      <td>RFC 6455 WebSockets full-duplex framing, 256-bit CSPRNG session tokens, SHA-256 database hashing, Store-and-Forward Outbox pattern, Truncated Exponential Backoff.</td>
+    </tr>
+    <tr>
+      <td><strong>Rashi Johari</strong><br><span style="font-size:7.5pt; color:#64748b;">2401030072</span></td>
+      <td><strong>Boundary Watcher & Rogue LAN Peers</strong></td>
+      <td><code>agent/win/net.py</code><br><code>agent/watchers.py</code><br><code>agent/platform.py</code></td>
+      <td>Cross-layer TCP state inspection (<code>CONN_ESTABLISHED</code>), RFC 1918 private subnets, Promiscuous mode Wireshark pass-through, Layer 7 NCSI HTTP & Layer 4 TCP Anycast probes.</td>
+    </tr>
+    <tr>
+      <td><strong>Ivy Singh</strong><br><span style="font-size:7.5pt; color:#64748b;">2401030071</span></td>
+      <td><strong>Ingestion, Fingerprinting & Decision AI</strong></td>
+      <td><code>server/ingest.py</code><br><code>common/fingerprint.py</code><br><code>server/decide.py</code></td>
+      <td>Server-side Dead-Man Watchdog (>10s timeout), Delta encoding for bandwidth optimization (~4.0 kbps), MOSS-style AST Winnowing algorithm, CRC32 polynomial hashing, Edge-to-Cloud decision hierarchy.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>11.1 Individual Defense Focus in the Viva Voce</h2>
+<ul>
+  <li><strong>Priyanshu Gumber:</strong> Defends UDP vs. TCP tradeoffs, socket broadcast flags (<code>SO_BROADCAST</code>), broadcast confinement across routers, and the mathematical proof of Cristian's algorithm against client clock tampering.</li>
+  <li><strong>Toyesh Gupta:</strong> Defends the overhead reduction of RFC 6455 WebSockets over HTTP polling (2-10 byte frames vs. 800+ bytes headers), session security via 256-bit CSPRNG tokens and SHA-256 at-rest hashing, and Store-and-Forward fault tolerance.</li>
+  <li><strong>Rashi Johari:</strong> Defends kernel socket table inspection, RFC 1918 private subnet filtering for peer-to-peer cheat detection, why Wireshark runs in promiscuous mode without false alarms, and captive portal detection via HTTP NCSI probes.</li>
+  <li><strong>Ivy Singh:</strong> Defends delta encoding for network scalability (preserving switch bandwidth), the server dead-man watchdog timer, the AST Winnowing algorithm for variable-renaming-invariant plagiarism detection, and AI decision thresholds.</li>
+</ul>
+
+<!-- PAGE 14: VIVA SYLLABUS MAP -->
+<div class="page-break"></div>
+<div class="section-pill-header">12. Viva Preparation — Full Computer Networks Syllabus Map</div>
 
 <p>
 Every topic from the Computer Networks syllabus that this project demonstrates, with the exact technical talking points:

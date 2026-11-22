@@ -39,6 +39,7 @@ export const api = {
   notice: (text: string) => req("POST", "/api/teacher/notice", { text }),
   warn: (seatId: number) => req("POST", `/api/teacher/seats/${seatId}/warn`, {}),
   forceSubmit: (seatId: number) => req("POST", `/api/teacher/seats/${seatId}/force-submit`),
+  endExam: () => req<{ ok: boolean; ended_seats: number }>("POST", "/api/teacher/end"),
   seat: (seatId: number) => req<SeatDetail>("GET", `/api/teacher/seats/${seatId}`),
   review: (flagId: number, status: "dismissed" | "confirmed") => req("PATCH", `/api/teacher/flags/${flagId}`, { status }),
   results: () => req<Results>("GET", "/api/teacher/results"),

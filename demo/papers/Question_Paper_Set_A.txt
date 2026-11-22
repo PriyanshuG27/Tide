@@ -1,0 +1,29 @@
+CS301 Lab Examination — Set A (Odd Seats)
+==================================================
+
+INSTRUCTIONS TO CANDIDATES
+--------------------------
+1. Write all your solutions in main.c (or solution.py) located inside C:\Exam\<roll>\.
+2. All workspace activity, active windows, and clipboard transfers are monitored by Tide.
+3. Any unauthorized websites or external code sources will result in auto-closure and flags.
+4. When finished, press the 'Submit' button in the floating Tide HUD bar at the top of your screen.
+
+PROBLEM 1: Network Packet Priority Queue (Min-Heap) [25 Marks]
+--------------------------------------------------------------
+Implement a priority queue for a router simulator processing incoming IP packets.
+Each packet has an integer PacketID, an integer Priority (1 = highest), and arrival Timestamp.
+Requirements:
+  - InsertPacket(id, priority, timestamp): Insert in O(log N) using a min-heap.
+  - DispatchNext(): Remove and print the highest priority packet. Tie-break by lowest timestamp.
+Input:  N=4, Packets: (101, 3, 1000), (102, 1, 1005), (103, 2, 1010), (104, 1, 1002)
+Output: Dispatched order: 104 (Pri:1, Time:1002), 102 (Pri:1, Time:1005), 103, 101
+
+PROBLEM 2: Binary Search Tree Validation & Range Query [25 Marks]
+-----------------------------------------------------------------
+Given a binary tree representation, verify whether it satisfies the strict BST property.
+If valid, compute the sum of all keys strictly within the range [Low, High].
+Requirements:
+  - IsValidBST(root): Return true if all left children < root < all right children.
+  - RangeSumBST(root, low, high): Return sum in O(K) where K is nodes in range.
+Input:  Tree: [15, 10, 20, 8, 12, 17, 25], Low = 10, High = 20
+Output: Valid: YES | Range Sum: 62 (10 + 12 + 15 + 17 + 20 = 62)

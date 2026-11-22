@@ -1,0 +1,29 @@
+CS301 Lab Examination — Set B (Even Seats)
+==================================================
+
+INSTRUCTIONS TO CANDIDATES
+--------------------------
+1. Write all your solutions in main.c (or solution.py) located inside C:\Exam\<roll>\.
+2. All workspace activity, active windows, and clipboard transfers are monitored by Tide.
+3. Any unauthorized websites or external code sources will result in auto-closure and flags.
+4. When finished, press the 'Submit' button in the floating Tide HUD bar at the top of your screen.
+
+PROBLEM 1: Circular Ring Buffer for Audio Streaming [25 Marks]
+--------------------------------------------------------------
+Implement a fixed-size circular ring buffer for real-time audio packet buffering.
+The buffer holds a maximum capacity of K frame samples.
+Requirements:
+  - Enqueue(sample): Add sample in O(1). If full, overwrite oldest sample & increment drop count.
+  - Dequeue(): Retrieve and remove oldest sample in O(1). Return -1 if empty.
+  - DrainAll(): Return all available elements in FIFO order and reset buffer state.
+Input:  Capacity=3, Enqueue(10), Enqueue(20), Enqueue(30), Enqueue(40), Dequeue()
+Output: Overwritten count: 1 (Sample 10 dropped) | Dequeued: 20 | Remaining: [30, 40]
+
+PROBLEM 2: Graph Cycle Detection & Topological Task Scheduling [25 Marks]
+-------------------------------------------------------------------------
+You are given N build tasks with M directed prerequisites (U must finish before V).
+Requirements:
+  - Detect if deadlock exists (directed cycle). If yes, print 'DEADLOCK DETECTED'.
+  - If acyclic, output any valid linear sequence of task completion (Kahn's / DFS).
+Input:  N=4, Dependencies: (1->2), (1->3), (3->4), (2->4)
+Output: Cycle: NO | Valid Schedule: 1 -> 2 -> 3 -> 4

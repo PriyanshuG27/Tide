@@ -13,13 +13,15 @@ from tide_common.rules import RuleHit, evaluate
 from .clock import ServerClock
 from .enforcer import Enforcer
 from .exam_folder import ExamFolder
-from .inventory import Inventory
+from .inventory import Inventory, _FILENAME
 from .platform import Platform
 from .ui.port import UiPort
 from .watchers import (ClipboardWatcher, ExtensionWatcher, LanWatcher, NetworkWatcher, ProcessWatcher,
                        UsbWatcher, WindowWatcher)
 
 TICK_S = 0.5
+EDITORS = {"code.exe", "code", "notepad.exe", "notepad++.exe", "codeblocks.exe",
+           "devenv.exe", "sublime_text.exe", "clion64.exe", "pycharm64.exe"}
 
 
 class Engine:
@@ -74,12 +76,24 @@ class Engine:
 
     async def _check_title(self, sig: Signal) -> None:
         title = sig.data.get("title") or ""
+        proc = (sig.data.get("process") or "").lower()
         if not self.inventory or (self.roll and self.roll.lower() in title.lower()):
             return
         path = self.inventory.match_title(title)
         if path and f"open:{path}" not in self._reported:
             self._reported.add(f"open:{path}")
             await self.on_signal(Signal(kind=Kind.FILE_OPEN, data={"path": path, "title": title}))
+            return
+
+        # If it's a code editor, check if an external/unindexed premade file or untitled tab is active
+        if proc in EDITORS:
+            tokens = _FILENAME.findall(title)
+            for token in tokens:
+                if self.folder and (self.folder.root / token).exists():
+                    continue
+                if f"open:{token}" not in self._reported:
+                    self._reported.add(f"open:{token}")
+                    await self.on_signal(Signal(kind=Kind.FILE_OPEN, data={"path": token, "title": title}))
 
     # ---- server --------------------------------------------------------------------------------
     async def on_server(self, m: dict) -> None:
@@ -99,6 +113,9 @@ class Engine:
                 self.ui.start(self.seat_no, self.set_name, self.clock.to_local(m["ends_at"]), str(self.folder.root))
             else:
                 self.ui.set_ends_at(self.clock.to_local(m["ends_at"]))
+            self.window._last = None
+            for s in self.window.poll():
+                await self.on_signal(s)
         elif t == "time":
             self.ui.set_ends_at(self.clock.to_local(m["ends_at"]))
         elif t == "notice":

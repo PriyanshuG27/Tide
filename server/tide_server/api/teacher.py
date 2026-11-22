@@ -149,6 +149,32 @@ async def force_submit(seat_id: int, ctx: Ctx = Depends(require_teacher)):
     return {"ok": True}
 
 
+@router.post("/end")
+async def end_exam(ctx: Ctx = Depends(require_teacher)):
+    with ctx.db() as db:
+        exam = _exam(db)
+        if exam.state != "live":
+            raise HTTPException(409, "Exam is not live")
+        exam.state = "ended"
+        exam.ends_at = clock.now()
+        db.add(exam)
+        seats = db.exec(select(Seat).where(Seat.exam_id == exam.id)).all()
+        active_seat_ids = [s.id for s in seats if s.state in ("live", "ready", "blocked", "offline")]
+        for s in seats:
+            if s.simulated and s.state != "submitted":
+                s.state = "submitted"
+                db.add(s)
+        db.commit()
+        out = exam_out(exam)
+
+    await ctx.hub.to_console({"t": "exam", "exam": out})
+    for seat_id in active_seat_ids:
+        ctx.ended_seats.add(seat_id)
+        await ctx.hub.to_agent(seat_id, msg("end", reason="teacher"))
+        await push_event(ctx, add_event(ctx, seat_id, "teacher", {"text": "Exam ended by teacher"}))
+    return {"ok": True, "ended_seats": len(active_seat_ids)}
+
+
 @router.get("/results")
 def get_results(ctx: Ctx = Depends(require_teacher)):
     with ctx.db() as db:

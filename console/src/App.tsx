@@ -23,6 +23,7 @@ export default function App() {
   useEffect(() => (authed ? connect(dispatch) : undefined), [authed]);
   useEffect(() => { if (room.connected && page === null) setPage(pageFor(room.exam?.state)); }, [room.connected, room.exam, page]);
   useEffect(() => { if (room.exam?.state === "live" && page === "lobby") setPage("live"); }, [room.exam?.state, page]);
+  useEffect(() => { if (room.exam?.state === "ended" && page === "live") setPage("results"); }, [room.exam?.state, page]);
 
   if (!authed) return <Login onDone={() => setAuthed(true)} />;
   const p = page ?? "setup";
