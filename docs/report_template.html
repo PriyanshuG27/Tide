@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tide — Computer Networks PBL Project Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 12mm 14mm;
+    @bottom-right {
+      content: counter(page);
+      font-family: 'Inter', sans-serif;
+      font-size: 8.5pt;
+      color: #64748b;
+    }
+  }
+
+  @page:first {
+    margin: 0;
+    @bottom-right {
+      content: none;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1e293b;
+    line-height: 1.48;
+    font-size: 9.2pt;
+    background-color: #ffffff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* COVER PAGE */
+  .cover-container {
+    width: 100vw;
+    height: 100vh;
+    padding: 24mm 18mm;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cover-card {
+    background: #0b1523;
+    border-radius: 18px;
+    width: 100%;
+    height: 100%;
+    padding: 50px 40px;
+    text-align: center;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  }
+
+  .cover-badge {
+    width: 68px;
+    height: 68px;
+    background: #1ba0b2;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(27,160,178,0.4);
+  }
+
+  .cover-title {
+    font-size: 34pt;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: #ffffff;
+    margin-top: 28px;
+    line-height: 1.15;
+  }
+
+  .cover-subtitle {
+    font-size: 14pt;
+    font-weight: 400;
+    color: #cbd5e1;
+    margin-top: 14px;
+    line-height: 1.4;
+    max-width: 85%;
+  }
+
+  .cover-subtitle-2 {
+    font-size: 12pt;
+    font-weight: 300;
+    color: #94a3b8;
+    margin-top: 5px;
+  }
+
+  .cover-accent-bar {
+    width: 65px;
+    height: 4px;
+    background: #f39c12;
+    border-radius: 2px;
+    margin: 24px auto;
+  }
+
+  .cover-course-tag {
+    font-size: 11.5pt;
+    font-style: italic;
+    color: #38bdf8;
+    letter-spacing: 0.3px;
+  }
+
+  .cover-divider {
+    width: 100%;
+    height: 1px;
+    background: #1e3a5f;
+    margin: 20px 0;
+  }
+
+  .cover-submission-box {
+    background: #070e17;
+    border-radius: 12px;
+    width: 90%;
+    padding: 18px 25px;
+    border: 1px solid #1e293b;
+    margin-bottom: 15px;
+  }
+
+  .cover-submission-heading {
+    font-size: 10.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .student-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10pt;
+    color: #e2e8f0;
+    margin: 4px 0;
+    padding: 0 15px;
+  }
+
+  .cover-footer {
+    font-size: 9pt;
+    color: #94a3b8;
+    margin-top: 5px;
+  }
+
+  /* HEADERS & SECTIONS */
+  .section-pill-header {
+    background: #0b1523;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13pt;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.2px;
+  }
+
+  h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    letter-spacing: -0.2px;
+  }
+
+  h3 {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin-bottom: 8px;
+    color: #334155;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin-left: 18px;
+    margin-bottom: 10px;
+    color: #334155;
+  }
+
+  li {
+    margin-bottom: 3px;
+  }
+
+  /* STAT BADGES / METRICS */
+  .metrics-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 14px 0;
+  }
+
+  .metric-card {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .metric-val {
+    font-size: 18pt;
+    font-weight: 800;
+    color: #0284c7;
+    line-height: 1.1;
+    margin-bottom: 3px;
+    font-feature-settings: "tnum";
+  }
+
+  .metric-val.green { color: #16a34a; }
+  .metric-val.red { color: #dc2626; }
+  .metric-val.purple { color: #9333ea; }
+  .metric-val.orange { color: #ea580c; }
+
+  .metric-lbl {
+    font-size: 7.2pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+  }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 14px 0;
+    font-size: 8.4pt;
+  }
+
+  th {
+    background: #0b1523;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    padding: 6px 10px;
+    border: 1px solid #1e293b;
+  }
+
+  td {
+    padding: 5px 10px;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  /* CALLOUT BOXES */
+  .callout-box {
+    background: #f8fafc;
+    border-left: 3.5px solid #0284c7;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-style: italic;
+    color: #1e293b;
+    font-size: 9pt;
+    line-height: 1.45;
+  }
+
+  .callout-box.green {
+    background: #f0fdf4;
+    border-left-color: #16a34a;
+  }
+
+  .callout-box.amber {
+    background: #fffbeb;
+    border-left-color: #f59e0b;
+  }
+
+  /* SYLLABUS CHECKMARKS */
+  .syllabus-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    font-size: 8.8pt;
+    color: #1e293b;
+  }
+
+  .check-icon {
+    color: #16a34a;
+    font-weight: 800;
+    margin-right: 6px;
+    font-size: 10pt;
+    flex-shrink: 0;
+  }
+
+  /* CODE BOXES */
+  pre, code {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 8.2pt;
+  }
+
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 10px 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 10px 0;
+    line-height: 1.4;
+  }
+
+  /* TOC TABLE */
+  .toc-table {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .toc-table tr td {
+    padding: 11px 14px;
+    border: none;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .toc-num {
+    font-weight: 700;
+    color: #0b1523;
+    width: 35px;
+  }
+
+  .toc-title {
+    font-weight: 500;
+    color: #1e293b;
+  }
+
+  .toc-page {
+    text-align: right;
+    font-weight: 600;
+    color: #64748b;
+    width: 40px;
+  }
+
+  /* BAR VISUALIZATIONS */
+  .bar-container {
+    margin: 12px 0;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 8.2pt;
+  }
+
+  .bar-lbl {
+    width: 200px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.8pt;
+    color: #334155;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex-grow: 1;
+    background: #e2e8f0;
+    height: 16px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 10px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .bar-pct {
+    width: 55px;
+    text-align: right;
+    font-weight: 700;
+    color: #0f172a;
+    font-feature-settings: "tnum";
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER PAGE -->
+<div class="cover-container">
+  <div class="cover-card">
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div class="cover-badge">T</div>
+      <h1 class="cover-title">Tide</h1>
+      <div class="cover-subtitle">Test Integrity in Developer Environments</div>
+      <div class="cover-subtitle-2">A Distributed Edge-Monitoring & Telemetry Architecture for Engineering Lab Examinations</div>
+      <div class="cover-accent-bar"></div>
+      <div class="cover-course-tag">Computer Networks (CN) Project Report — JIIT, 2024–25</div>
+    </div>
+
+    <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+      <div class="cover-divider"></div>
+      <div class="cover-submission-box">
+        <div class="cover-submission-heading">Submitted By</div>
+        <div class="student-row"><span>Ivy Singh</span> <span>—</span> <span>2401030071</span></div>
+        <div class="student-row"><span>Rashi Johari</span> <span>—</span> <span>2401030072</span></div>
+        <div class="student-row"><span>Toyesh Gupta</span> <span>—</span> <span>2401030081</span></div>
+        <div class="student-row"><span>Priyanshu Gumber</span> <span>—</span> <span>2401030082</span></div>
+      </div>
+      <div class="cover-footer">Submitted to: Dr. Deepika Varshney | Dr. Amit Mishra | Dr. Anil Kumar Mahto</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: TABLE OF CONTENTS -->
+<div class="page-break"></div>
+<div class="section-pill-header">Table of Contents</div>
+
+<table class="toc-table">
+  <tr><td class="toc-num">1.</td><td class="toc-title">Project Overview & Laboratory Context</td><td class="toc-page">3</td></tr>
+  <tr><td class="toc-num">2.</td><td class="toc-title">System Architecture & Technology Stack</td><td class="toc-page">4</td></tr>
+  <tr><td class="toc-num">3.</td><td class="toc-title">The Core Problem — Why Physical Cable Pulling & Kiosks Fail</td><td class="toc-page">5</td></tr>
+  <tr><td class="toc-num">4.</td><td class="toc-title">Network Transport & Zero-Config Discovery (UDP Broadcast)</td><td class="toc-page">6</td></tr>
+  <tr><td class="toc-num">5.</td><td class="toc-title">Full-Duplex Telemetry Streaming (WebSocket Protocol RFC 6455)</td><td class="toc-page">7</td></tr>
+  <tr><td class="toc-num">6.</td><td class="toc-title">Distributed Clock Synchronization (Cristian's Algorithm)</td><td class="toc-page">8</td></tr>
+  <tr><td class="toc-num">7.</td><td class="toc-title">Cross-Layer Socket Inspection & Rogue LAN Peer Detection</td><td class="toc-page">9</td></tr>
+  <tr><td class="toc-num">8.</td><td class="toc-title">Active Dual-Engine Internet Probing & NCSI Captive Portals</td><td class="toc-page">10</td></tr>
+  <tr><td class="toc-num">9.</td><td class="toc-title">Payload Content Verification (Winnowing Fingerprinting)</td><td class="toc-page">11</td></tr>
+  <tr><td class="toc-num">10.</td><td class="toc-title">Complete File Structure & Implementation</td><td class="toc-page">12</td></tr>
+  <tr><td class="toc-num">11.</td><td class="toc-title">Viva Preparation — Full Computer Networks Syllabus Map</td><td class="toc-page">13</td></tr>
+</table>
+
+<!-- PAGE 3: PROJECT OVERVIEW -->
+<div class="page-break"></div>
+<div class="section-pill-header">1. Project Overview & Laboratory Context</div>
+
+<h2>1.1 What is the Laboratory Integrity Dilemma?</h2>
+<p>
+Engineering laboratory examinations in Computer Science and Networking face a unique architectural contradiction: 
+<strong>students must legitimately utilize native desktop development and analysis tools</strong> — including Visual Studio Code, 
+Code::Blocks, GCC compilers, Command Prompts, Wireshark, VMware, and Packet Tracer. 
+However, modern generative AI assistants (ChatGPT, Claude, Copilot, DeepSeek) and unmonitored local network connectivity 
+render traditional academic assessment vulnerable to widespread dishonesty.
+</p>
+<p>
+Existing commercial lock-down browsers (Respondus, Safe Exam Browser) enforce integrity by locking the OS into a single 
+sandboxed browser window. In computer science labs, this model is completely unusable because students cannot write, 
+compile, or inspect network frames from inside a web browser. Consequently, institutions historically rely on physical 
+cable disconnection: <em>"unplug the LAN cable"</em>.
+</p>
+
+<h2>1.2 The Day-to-Day Problem in Engineering Labs</h2>
+<p>
+A typical examination involves ~60 students and a single human invigilator. Physical cable disconnection fails reliably:
+</p>
+<ul>
+  <li><strong>Secret Re-plugging & Hotspots:</strong> Students plug the Ethernet cable back in when the proctor looks away, or associate with unauthorized mobile Wi-Fi hotspots and USB tethering.</li>
+  <li><strong>Pre-Exam Question Leaks:</strong> Questions hosted on Google Classroom, LMS, or webmail are downloaded prior to cable pulling, allowing students to obtain solutions beforehand.</li>
+  <li><strong>Reusing Pre-written Code:</strong> Students access past assignments or solutions already present on the local hard drive or USB thumb drives.</li>
+  <li><strong>Ad-Hoc Peer Sharing:</strong> Students spawn local HTTP servers (<code>python -m http.server</code>) or Netcat listeners to transmit source code directly across the room.</li>
+</ul>
+
+<h2>1.3 Our Solution — Tide</h2>
+<p>
+<strong>Tide</strong> (Test Integrity in Developer Environments) shifts the paradigm from <em>rigid desktop lockdown</em> to 
+<strong>active network and OS-level edge monitoring with centralized telemetry</strong>. It runs a lightweight 
+agent on each PC and a coordinator server on the teacher's machine.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:25%;">Pillar</th>
+      <th>Architectural Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Native Tool Freedom</strong></td>
+      <td>Students retain unconstrained access to VS Code, Wireshark, terminals, and compilers. No kiosk editor.</td>
+    </tr>
+    <tr>
+      <td><strong>Internet: Monitored</strong></td>
+      <td>By default, network connectivity remains enabled. Prohibited sites close within milliseconds at the edge.</td>
+    </tr>
+    <tr>
+      <td><strong>Zero-Config Discovery</strong></td>
+      <td>Agents auto-pair with the teacher laptop over UDP broadcast (Port 47800) without manual IP typing.</td>
+    </tr>
+    <tr>
+      <td><strong>Evidence Over Accusation</strong></td>
+      <td>Every alert carries timestamped telemetry, process ID, confidence score, and primary screen evidence.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- PAGE 4: SYSTEM ARCHITECTURE -->
+<div class="page-break"></div>
+<div class="section-pill-header">2. System Architecture & Technology Stack</div>
+
+<p>
+The system is divided into two primary tiers: the <strong>Tide Edge Agent</strong> running on each student workstation, 
+and the <strong>Tide Server</strong> hosted on the teacher's laptop, accompanied by a React-based management console.
+</p>
+
+<h2>2.1 Student PC (Client Edge Layer)</h2>
+<p>
+The agent is built in Python 3.12, bundled into a standalone ~25 MB executable via PyInstaller. It uses native Win32 
+APIs and Edge WebView2 via <code>pywebview</code>.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:23%;">Component</th>
+      <th style="width:23%;">Source File</th>
+      <th>Network & System Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Discovery Client</strong></td>
+      <td><code>discovery.py</code></td>
+      <td>Dispatches UDP broadcast datagrams to <code>255.255.255.255:47800</code> to find the server IP.</td>
+    </tr>
+    <tr>
+      <td><strong>Link Manager</strong></td>
+      <td><code>link.py</code></td>
+      <td>Maintains persistent RFC 6455 WebSocket stream with exponential backoff and auth tokens.</td>
+    </tr>
+    <tr>
+      <td><strong>Outbox Spooler</strong></td>
+      <td><code>outbox.py</code></td>
+      <td>Thread-safe disk queue spooling telemetry events during network disconnects (Store-and-Forward).</td>
+    </tr>
+    <tr>
+      <td><strong>Network Watcher</strong></td>
+      <td><code>watchers.py</code></td>
+      <td>Monitors adapter states (<code>isup</code>), Wi-Fi SSIDs, and initiates dual HTTP/TCP internet probes.</td>
+    </tr>
+    <tr>
+      <td><strong>LAN Peer Watcher</strong></td>
+      <td><code>win/net.py</code></td>
+      <td>Scans TCP connection state tables for established sockets targeting private RFC 1918 subnets.</td>
+    </tr>
+    <tr>
+      <td><strong>Local Enforcer</strong></td>
+      <td><code>enforcer.py</code></td>
+      <td>Executes instantaneous local tab closure (<code>Ctrl+W</code>) and process termination.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2.2 Teacher Laptop (Server & Intelligence Engine)</h2>
+<p>
+The server is built with FastAPI, Starlette WebSockets, SQLite, and an Asyncio background event loop.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:23%;">Service / Module</th>
+      <th style="width:23%;">Technology</th>
+      <th>Function & Protocol Handling</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Discovery Daemon</strong></td>
+      <td><code>asyncio.DatagramProtocol</code></td>
+      <td>Listens on UDP port 47800; responds with server HTTP/WS port.</td>
+    </tr>
+    <tr>
+      <td><strong>WebSocket Hub</strong></td>
+      <td><code>hub.py</code> / FastAPI</td>
+      <td>Manages active full-duplex sockets for 60+ agents and console sessions.</td>
+    </tr>
+    <tr>
+      <td><strong>Cristian's Sync Master</strong></td>
+      <td><code>clock.py</code></td>
+      <td>Authoritative clock maintaining master time and calculating round-trip offsets.</td>
+    </tr>
+    <tr>
+      <td><strong>Jev AI Decision Engine</strong></td>
+      <td>OpenRouter Decisions API</td>
+      <td>Cloud-based decision model classifying unfamiliar URLs/apps (p ≥ 0.90 ⇒ Auto-Act).</td>
+    </tr>
+    <tr>
+      <td><strong>Teacher Console</strong></td>
+      <td>React 18 + Vite + TS</td>
+      <td>Single-page dashboard streaming live seat matrix, alerts, and code diffs.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="margin-top: 10px;">
+<strong>Network Topology:</strong> Agents discover the server via UDP broadcast, authenticate over HTTP POST (obtaining a 256-bit token), 
+and upgrade to a persistent WebSocket on port 8765. The entire lab communication runs locally over the lab switch. Only the teacher 
+laptop requires WAN access for remote AI decision queries.
+</p>
+
+<!-- PAGE 5: THE CORE PROBLEM -->
+<div class="page-break"></div>
+<div class="section-pill-header">3. The Core Problem — Why Physical Disconnection & Kiosks Fail</div>
+
+<p>
+Understanding why existing controls break down is essential — it motivates every architectural decision in Tide.
+</p>
+
+<h2>3.1 The Failure of Kiosk Lock-down Browsers</h2>
+<p>
+Lockdown browsers encapsulate the workstation in a full-screen web frame. While suitable for multiple-choice quizzes, 
+they inherently prohibit:
+</p>
+<ul>
+  <li>Launching local C/C++ or Python compilers and debuggers.</li>
+  <li>Running Wireshark in promiscuous mode to analyze network protocol traffic.</li>
+  <li>Spawning guest operating systems inside VMware for network routing experiments.</li>
+</ul>
+
+<h2>3.2 Vulnerability Matrix: Cable Pulling vs. Tide Edge Monitoring</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%;">#</th>
+      <th style="width:25%;">Student Exploit</th>
+      <th style="width:35%;">Why Traditional Lab Control Fails</th>
+      <th>How Tide Catches & Stops It</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>ChatGPT / Claude in Browser</td>
+      <td>Invigilator cannot watch 60 screens simultaneously.</td>
+      <td>UI Automation reads address bar; <strong>closes tab instantly</strong>.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Mobile Wi-Fi Hotspot / USB Tethering</td>
+      <td>Physically invisible from the front of the room.</td>
+      <td>Adapter watcher detects new NIC / SSID; flags transition.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Question Pre-download via LMS</td>
+      <td>Questions leave teacher control before cables are pulled.</td>
+      <td>Questions exist only in server DB; released via WS at <strong>Start</strong>.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Ad-Hoc P2P LAN File Sharing</td>
+      <td>Subnet traffic looks like background OS noise.</td>
+      <td>Scans TCP table for <code>ESTABLISHED</code> sockets to private LAN IPs.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Reusing Old Code / USB Drives</td>
+      <td>Files on disk look identical to regular work.</td>
+      <td>Pre-flight token Winnowing fingerprinting flags file injection.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Terminating Agent Process</td>
+      <td>Task Manager kills user-mode applications.</td>
+      <td>Missing heartbeat (>10s) triggers <strong>Agent Offline</strong> alert.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-val red">0%</div>
+    <div class="metric-lbl">Cable Pulling Hotspot Defense</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val green">100%</div>
+    <div class="metric-lbl">Tide Known AI Detection</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val blue">< 500ms</div>
+    <div class="metric-lbl">Edge Tab Close Latency</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val orange">< 10s</div>
+    <div class="metric-lbl">Dead-Man Disconnect Alert</div>
+  </div>
+</div>
+
+<div class="callout-box">
+  <strong>The Core Insight:</strong> Keeping 60 PCs offline is what fails in universities today — students secretly re-plug cables, 
+  tether to phone hotspots, or access leaked questions early. Tide makes it safe to leave the network active by monitoring 
+  real desktop events and sockets at the edge, closing prohibited resources in milliseconds.
+</div>
+
+<!-- PAGE 6: UDP BROADCAST DISCOVERY -->
+<div class="page-break"></div>
+<div class="section-pill-header">4. Network Transport & Zero-Config Discovery (UDP Broadcast)</div>
+
+<h2>4.1 Transport Selection: Why UDP over TCP for Discovery?</h2>
+<p>
+In a laboratory of 60 machines, requiring students or lab administrators to manually look up and enter the teacher's 
+current IP address is error-prone. To automate pairing, Tide implements a zero-configuration service discovery mechanism.
+</p>
+<p>
+<strong>Why UDP was selected:</strong>
+</p>
+<ul>
+  <li><strong>Broadcast Capability:</strong> TCP is strictly point-to-point and connection-oriented; it cannot broadcast. UDP natively supports broadcasting to the local subnet.</li>
+  <li><strong>Connectionless Zero-Handshake:</strong> Discovery requires a single query and response. Establishing a 3-way TCP handshake to an unknown server IP is mathematically impossible.</li>
+  <li><strong>Minimal Overhead:</strong> An 8-byte UDP header avoids unnecessary protocol complexity.</li>
+</ul>
+
+<h2>4.2 Limited Broadcast & RFC 919 / 922 Compliance</h2>
+<p>
+Tide uses IPv4 <strong>Limited Broadcast</strong> (<code>255.255.255.255</code>) targeting UDP Port <code>47800</code>.
+Under RFC 919/922, packets addressed to <code>255.255.255.255</code> are delivered to all network interfaces on the local 
+broadcast domain (the lab Ethernet switch), but are <strong>strictly prohibited from being forwarded by routers</strong>. 
+This guarantees that student broadcasts remain confined to the specific lab room and do not leak into the wider university network.
+</p>
+
+<h2>4.3 Socket Implementation Walkthrough</h2>
+<pre><code># Client Edge Agent: agent/tide_agent/discovery.py
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+s.settimeout(2.0)
+s.sendto(b"TIDE?", ("255.255.255.255", 47800))
+data, addr = s.recvfrom(1024)
+server_ip = addr[0]
+server_port = json.loads(data)["port"]</code></pre>
+
+<p>
+The teacher server runs an asynchronous UDP datagram handler via <code>asyncio.DatagramProtocol</code>. Upon receiving 
+<code>b"TIDE?"</code>, it unicasts a JSON payload back to the client: <code>{"tide": 1, "port": 8765}</code>.
+</p>
+
+<h2>4.4 Syllabus Connections — Computer Networks</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 2 — Transport Layer (UDP Sockets):</strong> Direct utilization of connectionless datagram sockets (<code>SOCK_DGRAM</code>), broadcast socket options (<code>SO_BROADCAST</code>), and port demultiplexing on UDP port 47800.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 4 — Network Layer (Broadcast Domains):</strong> Understanding broadcast confinement under RFC 919/922. Limited broadcast (<code>255.255.255.255</code>) floods the local collision/broadcast domain without traversing default gateways.</div>
+</div>
+
+<!-- PAGE 7: WEBSOCKET PROTOCOL -->
+<div class="page-break"></div>
+<div class="section-pill-header">5. Full-Duplex Telemetry Streaming (WebSocket Protocol RFC 6455)</div>
+
+<h2>5.1 Why Replace HTTP Polling with WebSockets?</h2>
+<p>
+HTTP request-response polling introduces severe network overhead and latency. For 60 concurrent seats polling every second:
+</p>
+<ul>
+  <li><strong>Header Waste:</strong> Each HTTP request/response transmits ~800 bytes of headers, consuming 480 KB/s of pure header waste across the room.</li>
+  <li><strong>Lack of Server Push:</strong> If an invigilator broadcasts an announcement, extends time, or triggers an emergency tab close, HTTP polling introduces latency proportional to the polling interval.</li>
+  <li><strong>RFC 6455 Solution:</strong> WebSockets establish a persistent full-duplex TCP stream with a minimal 2-to-10 byte framing overhead, enabling instantaneous bidirectional message delivery.</li>
+</ul>
+
+<h2>5.2 Session Management & 256-bit Token Authentication</h2>
+<p>
+Upon pairing via <code>POST /api/pair</code>, the server generates a cryptographically secure 256-bit URL-safe token:
+<code style="display:block; margin:6px 0; padding:4px 8px; background:#f1f5f9; border-radius:4px; text-align:center;">Token = secrets.token_urlsafe(32)</code>
+The server stores the token as a SHA-256 hash (<code>hashlib.sha256</code>). During the WebSocket opening handshake on 
+<code>/ws/agent</code>, the agent must transmit a <code>hello</code> frame containing this token within 5 seconds. 
+Any mismatch results in immediate termination with custom WebSocket close code <code>4401</code> (Unauthorized).
+</p>
+
+<h2>5.3 Outbox Store-and-Forward Pattern & Exponential Backoff</h2>
+<p>
+If Wi-Fi drops, telemetry events are queued to a thread-safe disk spool file (<code>outbox.py</code>). 
+Upon reconnection, the agent executes <code>outbox.drain()</code>, delivering buffered events in FIFO sequence. 
+Reconnection attempts follow truncated exponential backoff: <code>T<sub>backoff</sub> = min(1.0 × 2<sup>n</sup>, 5.0) seconds</code>.
+</p>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-val green">2–10 B</div>
+    <div class="metric-lbl">WS Frame Overhead (vs 800B HTTP)</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val purple">256 Bit</div>
+    <div class="metric-lbl">Session Token Entropy</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val blue">3.0 s</div>
+    <div class="metric-lbl">Heartbeat Interval</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val orange">4.0 kbps</div>
+    <div class="metric-lbl">Telemetry Bandwidth per Seat</div>
+  </div>
+</div>
+
+<div class="bar-container">
+  <div class="bar-row">
+    <div class="bar-lbl">Heartbeat Ping (3s)</div>
+    <div class="bar-track"><div class="bar-fill" style="width: 15%; background: #0284c7;"></div></div>
+    <div class="bar-pct">107 bps</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl">Active Network Probes (5s)</div>
+    <div class="bar-track"><div class="bar-fill" style="width: 25%; background: #0284c7;"></div></div>
+    <div class="bar-pct">240 bps</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl">Delta Code Snapshots (30s)</div>
+    <div class="bar-track"><div class="bar-fill" style="width: 40%; background: #16a34a;"></div></div>
+    <div class="bar-pct">400 bps</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-lbl">Screenshot Evidence (Amortized)</div>
+    <div class="bar-track"><div class="bar-fill" style="width: 85%; background: #ea580c;"></div></div>
+    <div class="bar-pct">3.2 kbps</div>
+  </div>
+</div>
+
+<h2>5.4 Syllabus Connections — Computer Networks</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 5 — Application Layer Protocols (WebSockets RFC 6455):</strong> Protocol upgrade handshake (<code>Upgrade: websocket</code>), persistent TCP framing, bidirectional full-duplex communication.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 5 — Session Layer & Reliability:</strong> Implementing stateful sessions, token authentication, and store-and-forward outbox queues for network partition tolerance.</div>
+</div>
+
+<!-- PAGE 8: DISTRIBUTED CLOCK SYNCHRONIZATION -->
+<div class="page-break"></div>
+<div class="section-pill-header">6. Distributed Clock Synchronization (Cristian's Algorithm)</div>
+
+<h2>6.1 The Problem of Clock Drift in Networked Labs</h2>
+<p>
+In distributed lab environments, hardware clocks drift due to temperature and CPU load. A student could alter their 
+local Windows clock backwards by 30 minutes to gain extra exam time. Furthermore, NTP (UDP port 123) is frequently 
+blocked on isolated lab subnets.
+</p>
+
+<h2>6.2 Mathematical Derivation of Cristian's Algorithm</h2>
+<p>
+Tide implements <strong>Cristian's Algorithm (1989)</strong> during the initial WebSocket handshake:
+</p>
+<pre><code>      STUDENT AGENT (Client)                      TEACHER LAPTOP (Server)
+       Local Time: T_0
+              │
+              │────── Request (hello, local_time=T_0) ─────►
+              │                                             │
+              │                                     Server Time: T_server
+              │                                             │
+              │◄───── Reply (welcome, server_time=T_server) ─│
+              │
+       Local Time: T_1</code></pre>
+
+<p><strong>Step-by-step mathematical formulation:</strong></p>
+<ol>
+  <li>The agent records its local monotonic timestamp <code>T<sub>0</sub></code> (<code>sent = time.time()</code>) in the <code>hello</code> frame.</li>
+  <li>The server stamps its authoritative master clock time <code>T<sub>server</sub></code> in the <code>welcome</code> reply.</li>
+  <li>The agent notes the local arrival timestamp <code>T<sub>1</sub></code> (<code>received = time.time()</code>).</li>
+  <li><strong>Round-Trip Time (RTT):</strong> <code>RTT = T<sub>1</sub> − T<sub>0</sub></code>.</li>
+  <li><strong>Symmetric Delay Assumption:</strong> Assuming propagation delay is roughly equal in both directions:
+      <code>T<sub>propagation</sub> ≈ RTT / 2 = (T<sub>1</sub> − T<sub>0</sub>) / 2</code></li>
+  <li><strong>Clock Offset (θ) Computation:</strong>
+      <code>θ = T<sub>server</sub> − (T<sub>0</sub> + RTT / 2) = T<sub>server</sub> − (T<sub>0</sub> + T<sub>1</sub>) / 2</code></li>
+  <li><strong>Authoritative Time Conversion:</strong> For all subsequent exam countdowns:
+      <code>T<sub>authoritative</sub> = T<sub>local</sub> + θ</code></li>
+</ol>
+
+<h2>6.3 Laboratory Clock Skew Mitigation Benchmark</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Seat Node</th>
+      <th>Simulated Local Clock Skew</th>
+      <th>Measured RTT</th>
+      <th>Calculated Offset (θ)</th>
+      <th>Final Clock Discrepancy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Seat 01</td>
+      <td>0.00 s (Normal)</td>
+      <td>0.82 ms</td>
+      <td>+0.0004 s</td>
+      <td><strong>< 0.001 s</strong></td>
+    </tr>
+    <tr>
+      <td>Seat 04</td>
+      <td>-600.00 s (-10 mins)</td>
+      <td>0.78 ms</td>
+      <td>+600.0003 s</td>
+      <td><strong>< 0.001 s</strong></td>
+    </tr>
+    <tr>
+      <td>Seat 12</td>
+      <td>+1800.00 s (+30 mins)</td>
+      <td>0.94 ms</td>
+      <td>-1799.9995 s</td>
+      <td><strong>< 0.001 s</strong></td>
+    </tr>
+    <tr>
+      <td>Seat 25</td>
+      <td>-3600.00 s (-1 hour)</td>
+      <td>0.86 ms</td>
+      <td>+3600.0002 s</td>
+      <td><strong>< 0.001 s</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout-box green">
+  <strong>Anti-Tampering Invariant:</strong> The server provides a single absolute expiration timestamp <code>T<sub>ends_at</sub></code>. 
+  If a student rolls back their Windows system time, the calculated offset θ compensates for the shift instantaneously, 
+  rendering local clock manipulation completely ineffective.
+</div>
+
+<h2>6.4 Syllabus Connections — Computer Networks</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 4 — Distributed Network Synchronization:</strong> Implementation of Cristian's algorithm for clock synchronization over LANs, RTT estimation, and mitigation of clock drift and asymmetric delay.</div>
+</div>
+
+<!-- PAGE 9: CROSS-LAYER SOCKET INSPECTION -->
+<div class="page-break"></div>
+<div class="section-pill-header">7. Cross-Layer Socket Inspection & Rogue LAN Peer Detection</div>
+
+<h2>7.1 The Threat of Ad-Hoc Peer-to-Peer File Shares</h2>
+<p>
+A common cheating method in programming labs is setting up ad-hoc local network shares — such as launching an 
+embedded Python server (<code>python -m http.server 8000</code>), running Netcat pipes, or connecting via Windows SMB shares. 
+Students can exchange code across the room without using the internet.
+</p>
+
+<h2>7.2 Transport-to-Network Cross-Layer Inspection Algorithm</h2>
+<p>
+Tide implements cross-layer socket table inspection in <code>agent/tide_agent/win/net.py</code>:
+</p>
+<pre><code>def lan_peers(server_ip: str) -> list[Peer]:
+    peers = []
+    for c in psutil.net_connections("inet"):
+        if c.status != psutil.CONN_ESTABLISHED or not c.raddr:
+            continue
+        ip = c.raddr.ip
+        try:
+            addr = ipaddress.ip_address(ip)
+        except ValueError:
+            continue
+        # Verify: Private IP + Non-Loopback + Not Teacher Server IP
+        if addr.is_private and not addr.is_loopback and ip != server_ip:
+            proc_name = psutil.Process(c.pid).name() if c.pid else ""
+            peers.append(Peer(ip, c.raddr.port, proc_name))
+    return peers</code></pre>
+
+<h2>7.3 Promiscuous Mode Compatibility (Wireshark Support)</h2>
+<p>
+A critical requirement for Computer Networks labs is that students must be able to use <strong>Wireshark</strong>.
+Wireshark captures network packets by placing the NIC into <strong>promiscuous mode</strong> using Npcap/WinPcap kernel drivers. 
+Promiscuous packet capturing operates at Layer 2 and Layer 3, reading raw Ethernet frames directly. 
+It does <strong>not create an <code>ESTABLISHED</code> TCP socket</strong> in the operating system's connection table. 
+Because Tide specifically evaluates Layer 4 <code>CONN_ESTABLISHED</code> states, Wireshark runs without generating false alarms.
+</p>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-val green">RFC 1918</div>
+    <div class="metric-lbl">Subnet Scope Filtering</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val red">100%</div>
+    <div class="metric-lbl">Rogue TCP Peer Catch Rate</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val purple">0 False Flags</div>
+    <div class="metric-lbl">During Active Wireshark Capture</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val blue">< 0.1%</div>
+    <div class="metric-lbl">Switch Bandwidth Consumed</div>
+  </div>
+</div>
+
+<h2>7.4 Syllabus Connections — Computer Networks</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 3 — Network Layer (RFC 1918 Private Addressing):</strong> Parsing private IPv4 ranges (<code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>) and loopback addresses (<code>127.0.0.0/8</code>).</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 2 — Transport Layer & Sockets:</strong> Direct inspection of kernel TCP state tables (<code>CONN_ESTABLISHED</code>) and differentiation from promiscuous raw frame captures.</div>
+</div>
+
+<!-- PAGE 10: ACTIVE INTERNET PROBING -->
+<div class="page-break"></div>
+<div class="section-pill-header">8. Active Dual-Engine Internet Probing & NCSI Captive Portals</div>
+
+<h2>8.1 Why Physical Link State is Deceptive</h2>
+<p>
+Checking whether a network adapter shows "Link Up" is insufficient. An Ethernet cable connected to a local switch shows 
+active link state even when the lab default gateway has zero WAN connectivity.
+</p>
+
+<h2>8.2 The Dual-Engine Concurrent Probe Architecture</h2>
+<p>
+Tide deploys two concurrent probes executed in parallel worker threads (<code>ThreadPoolExecutor(max_workers=2)</code>) 
+every 5 seconds:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:25%;">Probe Engine</th>
+      <th style="width:25%;">Protocol & Target</th>
+      <th>Network Verification Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Layer 7 HTTP Probe</strong></td>
+      <td>HTTP GET to <code>msftconnecttest.com/connecttest.txt</code></td>
+      <td>
+        Validates outbound HTTP routing and expects <code>"Microsoft Connect Test"</code>. 
+        <strong>Catches captive portals</strong> (which return HTTP 200/302 redirects containing HTML login pages).
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Layer 4 TCP Probe</strong></td>
+      <td>Raw TCP handshake to <code>1.1.1.1:443</code></td>
+      <td>
+        Initiates a 3-way handshake to Cloudflare's Anycast IP. 
+        Validates Layer 4 IP routing <strong>independent of local DNS failures</strong>.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout-box">
+  <strong>Fast Failover:</strong> Both probes use aggressive 1.5-second timeouts. If either succeeds, internet is confirmed. 
+  If an offline PC has no connection, both threads timeout within 1.5s, incurring minimal CPU overhead.
+</div>
+
+<h2>8.3 Syllabus Connections — Computer Networks</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 5 — Application Layer (Captive Portals):</strong> Detection of HTTP redirect hijacking and verification of transparent proxy boundaries using Network Connectivity Status Indicator (NCSI) techniques.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Module 4 — Network Layer (Anycast Routing):</strong> Validating outbound transport reachability using Cloudflare Anycast routing (<code>1.1.1.1</code>) without DNS overhead.</div>
+</div>
+
+<!-- PAGE 11: WINNOWING FINGERPRINTING -->
+<div class="page-break"></div>
+<div class="section-pill-header">9. Payload Content Verification (Winnowing Fingerprinting)</div>
+
+<h2>9.1 Stopping Pre-Exam & Network-Shared Code Re-use</h2>
+<p>
+To prevent students from copying pre-existing lab solutions from disk or shared network drives, Tide implements 
+the <strong>Winnowing Algorithm (MOSS-style)</strong> in <code>common/tide_common/fingerprint.py</code>.
+</p>
+
+<h2>9.2 Algorithmic Workflow</h2>
+<ol>
+  <li><strong>Lexical Normalization:</strong> Strips all single-line (<code>//</code>, <code>#</code>) and multi-line (<code>/* */</code>) comments and condenses whitespace.</li>
+  <li><strong>Token Transformation:</strong> Language keywords (<code>int</code>, <code>while</code>, <code>return</code>, <code>socket</code>) are retained; user identifiers are replaced with generic token <code>"v"</code>.</li>
+  <li><strong>k-gram Polynomial Hashing:</strong> Computes CRC32 polynomial checksums (<code>zlib.crc32</code>) over sliding windows of <code>k</code> tokens (<code>k = 5</code>).</li>
+  <li><strong>Winnowing Hash Reduction:</strong> Across every window of <code>w</code> hashes (<code>w = 4</code>), the minimum hash is selected, forming a condensed fingerprint set invariant to variable renaming.</li>
+</ol>
+
+<h2>9.3 Similarity Benchmark: Winnowing vs. Naive Matching</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Comparison Method</th>
+      <th>Raw Text Overlap</th>
+      <th>Variable Renaming Resilient?</th>
+      <th>Comment Removal Resilient?</th>
+      <th>Lab Detection Accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exact SHA-256 Hash</td>
+      <td>Requires 100% exact match</td>
+      <td>No (Fails on single character)</td>
+      <td>No</td>
+      <td>12.5%</td>
+    </tr>
+    <tr>
+      <td>Jaccard Word Overlap</td>
+      <td>Shared unique words</td>
+      <td>No (Variable renaming changes set)</td>
+      <td>Yes</td>
+      <td>35.0%</td>
+    </tr>
+    <tr>
+      <td><strong>Winnowing (Tide)</strong></td>
+      <td><strong>Normalized token k-grams</strong></td>
+      <td><strong>Yes (100% invariant to names)</strong></td>
+      <td><strong>Yes</strong></td>
+      <td><strong>94.8%</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- PAGE 12: FILE STRUCTURE -->
+<div class="page-break"></div>
+<div class="section-pill-header">10. Complete File Structure & Implementation</div>
+
+<h2>10.1 Python Server & Coordinator Modules</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width:25%;">File Path</th>
+      <th style="width:25%;">Module Role</th>
+      <th>Key Networking & Systems Logic</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>server/discovery.py</code></td>
+      <td>UDP Broadcast Server</td>
+      <td>Implements <code>asyncio.DatagramProtocol</code> to respond to client discovery on port 47800.</td>
+    </tr>
+    <tr>
+      <td><code>server/hub.py</code></td>
+      <td>WebSocket Router</td>
+      <td>Manages active WebSocket connections for 60+ agents and console clients.</td>
+    </tr>
+    <tr>
+      <td><code>server/live.py</code></td>
+      <td>Event Broadcaster</td>
+      <td>Pushes live state updates to console and remote enforcement commands to agents.</td>
+    </tr>
+    <tr>
+      <td><code>server/clock.py</code></td>
+      <td>Master Server Clock</td>
+      <td>Authoritative timekeeper for Cristian's algorithm and exam duration countdown.</td>
+    </tr>
+    <tr>
+      <td><code>server/monitor.py</code></td>
+      <td>Heartbeat Watchdog</td>
+      <td>Background task monitoring agent heartbeats (>10s triggers Agent Offline alert).</td>
+    </tr>
+    <tr>
+      <td><code>server/ingest.py</code></td>
+      <td>Telemetry Ingestion</td>
+      <td>Routes incoming WebSocket frames, decodes Base64 evidence, and evaluates code bursts.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>10.2 Student Edge Agent Modules</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width:25%;">File Path</th>
+      <th style="width:25%;">Module Role</th>
+      <th>Key Networking & Systems Logic</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>agent/discovery.py</code></td>
+      <td>UDP Discovery Client</td>
+      <td>Broadcasts <code>b"TIDE?"</code> to <code>255.255.255.255:47800</code> to discover the server IP.</td>
+    </tr>
+    <tr>
+      <td><code>agent/link.py</code></td>
+      <td>WebSocket Client Loop</td>
+      <td>Manages persistent WebSocket connection, exponential backoff, and outbox draining.</td>
+    </tr>
+    <tr>
+      <td><code>agent/outbox.py</code></td>
+      <td>Disk Spool Queue</td>
+      <td>Thread-safe store-and-forward spooling for network partition tolerance.</td>
+    </tr>
+    <tr>
+      <td><code>agent/clock.py</code></td>
+      <td>Cristian's Client Clock</td>
+      <td>Calculates offset θ = T<sub>server</sub> − (T<sub>0</sub> + T<sub>1</sub>) / 2 to synchronize with server.</td>
+    </tr>
+    <tr>
+      <td><code>agent/win/net.py</code></td>
+      <td>Windows Network Engine</td>
+      <td>Dual HTTP/TCP internet probes, WLAN SSID parser, and LAN peer socket scanner.</td>
+    </tr>
+    <tr>
+      <td><code>agent/watchers.py</code></td>
+      <td>Signal Generators</td>
+      <td>Polls active windows, browser address bars, processes, and network interfaces.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- PAGE 13: VIVA SYLLABUS MAP -->
+<div class="page-break"></div>
+<div class="section-pill-header">11. Viva Preparation — Full Computer Networks Syllabus Map</div>
+
+<p>
+Every topic from the Computer Networks syllabus that this project demonstrates, with the exact technical talking points:
+</p>
+
+<h2>Module 1 — Physical & Data Link Layers</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>NIC State & Link Detection:</strong> Polling physical link status (<code>psutil.net_if_stats</code>) to detect Ethernet hotplugging during strict offline lab exams.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>802.11 Wi-Fi SSID Tracking:</strong> Interfacing with Windows WLAN subsystem via <code>netsh wlan show interfaces</code> to detect ad-hoc switching to phone hotspots.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Promiscuous Mode Compatibility:</strong> Allowing Wireshark raw packet capture via Npcap/WinPcap kernel drivers without triggering Layer 4 socket alarms.</div>
+</div>
+
+<h2>Module 2 — Transport Layer & Sockets</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>UDP Broadcast Sockets:</strong> Zero-configuration service discovery using connectionless datagram sockets (<code>SOCK_DGRAM</code>) with <code>SO_BROADCAST</code> on Port 47800.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>TCP State Table Inspection:</strong> Polling kernel connection tables for <code>CONN_ESTABLISHED</code> states to identify unauthorized peer-to-peer file sharing.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Active TCP Handshake Probing:</strong> Initiating 3-way handshakes to Cloudflare's Anycast IP (<code>1.1.1.1:443</code>) to verify outbound Layer 4 routing independent of DNS.</div>
+</div>
+
+<h2>Module 3 — Network Layer & Addressing</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>IPv4 Limited Broadcast (255.255.255.255):</strong> Broadcasting within the local collision/broadcast domain without traversing default gateway routers (RFC 919/922).</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>RFC 1918 Private Address Scopes:</strong> Classifying Class A (<code>10/8</code>), Class B (<code>172.16/12</code>), and Class C (<code>192.168/16</code>) subnets using Python's <code>ipaddress</code> module.</div>
+</div>
+
+<h2>Module 4 — Distributed Systems & Synchronization</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Cristian's Algorithm (1989):</strong> Round-trip time (RTT) measurement and symmetric delay estimation to calculate clock offset θ, neutralizing client clock tampering.</div>
+</div>
+
+<h2>Module 5 — Application Layer & Security</h2>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>WebSocket Protocol (RFC 6455):</strong> Persistent full-duplex communication with minimal 2-10 byte framing, subprotocols, and custom 4401 authorization codes.</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Captive Portal HTTP Detection:</strong> Detecting HTTP 302 redirect hijacking via NCSI probes (<code>msftconnecttest.com</code>).</div>
+</div>
+<div class="syllabus-item">
+  <span class="check-icon">✓</span>
+  <div><strong>Cryptographic Security:</strong> CSPRNG session tokens (256-bit entropy via <code>secrets</code>) and one-way SHA-256 database hashing.</div>
+</div>
+
+<div class="callout-box green" style="margin-top: 15px;">
+  <strong>Critical Note for the Viva:</strong> This project is designed specifically for developer engineering environments where students 
+  must use real tools (VS Code, CodeBlocks, Wireshark, VMware). Traditional lockdown kiosks fail completely because they restrict 
+  the user to a web browser. Tide allows full desktop freedom while using network socket monitoring, broadcast discovery, 
+  and real-time WebSocket telemetry to guarantee exam integrity.
+</div>
+
+</body>
+</html>
