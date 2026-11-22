@@ -48,3 +48,15 @@ desktop.ini
 # Logs & scratch
 *.log
 scratch/
+
+# Local secrets (OpenRouter key etc.)
+.env.*
+!.env.example
+tide-data/
+
+# Console build artifacts and deps
+console/node_modules/
+
+# The built teacher console is committed so the teacher PC needs no Node.js
+!console/dist/
+!console/dist/**
