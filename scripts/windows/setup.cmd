@@ -46,10 +46,15 @@ exit /b 0
 
 :askkey
 echo.
-echo   Tide uses Jev (via OpenRouter) to recognise unknown AI sites and apps.
+echo   Tide uses Groq or OpenRouter to recognise unknown AI sites and apps.
 set "KEY="
-set /p "KEY=  Paste your OpenRouter API key, or just press Enter to skip: "
-> ".env.local" echo OPENROUTER_API_KEY=%KEY%
+set /p "KEY=  Paste your Groq or OpenRouter API key (or press Enter to skip): "
+if "%KEY:~0,4%"=="gsk_" (
+  > ".env.local" echo GROQ_API_KEY=%KEY%
+  >> ".env.local" echo GROQ_MODEL=openai/gpt-oss-20b
+) else (
+  > ".env.local" echo OPENROUTER_API_KEY=%KEY%
+)
 if "%KEY%"=="" (
   echo   Skipped. Tide will use simple keyword checks. Add the key later in .env.local
 ) else (

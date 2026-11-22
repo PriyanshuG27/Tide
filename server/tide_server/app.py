@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from tide_server import monitor
 from tide_server.api import agent, console, teacher
+from tide_server.classify.groq import GroqClassifier
 from tide_server.classify.jev import JevClassifier
 from tide_server.classify.pipeline import Pipeline
 from tide_server.config import Settings
@@ -19,6 +20,12 @@ from tide_server.simulate import SimRoom, bootstrap_demo, run_sim
 
 
 def build_pipeline(settings: Settings) -> Pipeline:
+    groq_key = settings.groq_api_key
+    if not groq_key and settings.openrouter_api_key and settings.openrouter_api_key.startswith("gsk_"):
+        groq_key = settings.openrouter_api_key
+
+    if groq_key:
+        return Pipeline(GroqClassifier(settings.groq_url, groq_key, settings.groq_model))
     if not settings.openrouter_api_key:
         return Pipeline(None)
     return Pipeline(JevClassifier(settings.jev_url, settings.openrouter_api_key, settings.jev_model))
@@ -38,8 +45,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             ctx.extras["exam_id"] = bootstrap_demo(ctx, mock_room=settings.mock_room)
             with ctx.db() as db:
                 code = db.get(Exam, ctx.extras["exam_id"]).join_code
-            print(f"\n  ┌──────────────────────────────┐\n  │  JOIN CODE for students:     │"
-                  f"\n  │          {code}              │\n  └──────────────────────────────┘\n", flush=True)
+            print(f"\n  +------------------------------+\n  |  JOIN CODE for students:     |"
+                  f"\n  |          {code}              |\n  +------------------------------+\n", flush=True)
         if settings.background_tasks:
             tasks.append(asyncio.create_task(monitor.run(ctx)))
             if settings.mock_room:

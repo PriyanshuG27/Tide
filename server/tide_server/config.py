@@ -25,3 +25,9 @@ class Settings(BaseSettings):
         "OPENROUTER_API_KEY", "openrouter_api_key"))
     jev_model: str = "~typesafe/jev-latest"
     jev_url: str = "https://openrouter.ai/api/alpha/decisions"
+    groq_api_key: str = Field(default="", validation_alias=AliasChoices(
+        "GROQ_API_KEY", "groq_api_key"))
+    groq_model: str = Field(default="openai/gpt-oss-20b", validation_alias=AliasChoices(
+        "GROQ_MODEL", "groq_model"))
+    groq_url: str = Field(default="https://api.groq.com/openai/v1/chat/completions", validation_alias=AliasChoices(
+        "GROQ_URL", "groq_url"))

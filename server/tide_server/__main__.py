@@ -37,7 +37,12 @@ def main(argv: list[str] | None = None) -> None:
     if args.fresh and settings.data_dir.exists():
         shutil.rmtree(settings.data_dir)
     app = create_app(settings)
-    mode = "Jev via OpenRouter" if settings.openrouter_api_key else "offline heuristics (no OPENROUTER_API_KEY)"
+    if settings.groq_api_key or (settings.openrouter_api_key and settings.openrouter_api_key.startswith("gsk_")):
+        mode = f"Groq ({settings.groq_model})"
+    elif settings.openrouter_api_key:
+        mode = f"Jev via OpenRouter ({settings.jev_model})"
+    else:
+        mode = "offline heuristics (no GROQ_API_KEY / OPENROUTER_API_KEY)"
     room = "59 simulated students + real ones" if settings.mock_room else "real students only"
     print(f"\n  Tide teacher server"
           f"\n  Console     http://localhost:{settings.port}   (PIN {settings.teacher_pin})"
